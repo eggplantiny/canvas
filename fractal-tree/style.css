@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+canvas {
+  position: absolute;
+  background: black;
+  width: 100%;
+  height: 100%;
+}
+
+.gen-tree-btn {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  position: absolute;
+  /*left: 0;*/
+  bottom: 5%;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 20px 30px;
+  border-radius: 16px;
+  background: indigo;
+  color: aliceblue;
+  font-size: 14px;
+  overflow: hidden;
+}
