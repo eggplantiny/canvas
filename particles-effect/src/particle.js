@@ -14,7 +14,7 @@ export default class Particle {
         ctx.beginPath()
         
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false)
-        ctx.fillStyle = '#8c5523'
+        ctx.fillStyle = this.color
         
         ctx.fill()
     }
@@ -46,7 +46,7 @@ export default class Particle {
             }
 
             if (mouseY > this.y && this.y > this.size * this.delta) {
-                this.y -= 10
+                this.y -= this.delta
             }
         }
         this.x += this.directionX
