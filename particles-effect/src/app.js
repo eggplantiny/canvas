@@ -26,7 +26,8 @@ class App {
         //  setting resize event
         this.resize()
         window.addEventListener('resize', this.resize.bind(this), false)
-        window.addEventListener('mousemove', this.onMoveMouse.bind(this), false)
+        window.addEventListener('mousemove', this.onMouseMove.bind(this), false)
+        window.addEventListener('mouseout', this.onMouseOut.bind(this), false)
     }
 
     resize () {
@@ -37,9 +38,14 @@ class App {
         this.animate()
     }
 
-    onMoveMouse (event) {
+    onMouseMove (event) {
         this.mouse.x = event.x
         this.mouse.y = event.y
+    }
+
+    onMouseOut () {
+        this.mouse.x = null
+        this.mouse.y = null
     }
 
     initialize () {
