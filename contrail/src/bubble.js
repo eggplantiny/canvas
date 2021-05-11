@@ -1,12 +1,14 @@
 export class Bubble {
-    constructor (x, y, size, color, shrink = 0.9, spread = 2) {
+    constructor (x, y, size, color, shrink = 0.90, spread = 1.0) {
         this.x = x
         this.y = y
         this.size = size
         this.currentSize = size
         this.color = color
         this.shrink = shrink
-        this.spread = spread
+        this.spread = spread + Math.random()
+        this.directionX = Math.random() * (Math.random() >= 0.5 ? 1 : -1)
+        this.directionY = Math.random() * (Math.random() >= 0.5 ? 1 : -1)
     }
 
     draw (ctx) {
@@ -18,11 +20,22 @@ export class Bubble {
         ctx.fill()
     }
 
-    update () {
+    update (screenWidth, screenHeight) {
+        if (this.x > screenWidth || this.x < 0) {
+            this.directionX *= -1
+        }
+
+        if (this.y > screenHeight || this.y < 0) {
+            this.directionY *= -1
+        }
+
+        this.x += this.directionX * this.spread
+        this.y += this.directionY * this.spread
+
         this.size *= this.shrink
     }
 
     isDisappeared () {
-        return this.size <= 0.1
+        return this.size <= 0.05
     }
 }

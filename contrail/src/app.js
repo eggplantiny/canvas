@@ -46,7 +46,7 @@ class App {
 
     onMouseMove (event) {
         if (this.mouse.down === true &&
-            distance2Point(this.mouse.x, this.mouse.y, event.x, event.y) > 10
+            distance2Point(this.mouse.x, this.mouse.y, event.x, event.y) > 2
         ) {
             this.mouse.x = event.x
             this.mouse.y = event.y
@@ -97,7 +97,8 @@ class App {
     }
 
     addBubble (x, y) {
-        const size = Math.random() * 10 + 20
+        // const size = Math.random() * 10 + 20
+        const size = 20
         const bubble = new Bubble(x, y, size, '#ffffff')
         this.bubbleList.push(bubble)
     }
