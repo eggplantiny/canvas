@@ -13,7 +13,7 @@ class App {
         this.ctx = this.canvas.getContext('2d')
 
         //  Setting mouse
-        this.mouse = {
+        this.pointer = {
             x: null,
             y: null,
             radius: 128
@@ -39,13 +39,13 @@ class App {
     }
 
     onMouseMove (event) {
-        this.mouse.x = event.x
-        this.mouse.y = event.y
+        this.pointer.x = event.x
+        this.pointer.y = event.y
     }
 
     onMouseOut () {
-        this.mouse.x = null
-        this.mouse.y = null
+        this.pointer.x = null
+        this.pointer.y = null
     }
 
     initialize () {
@@ -71,9 +71,9 @@ class App {
             particle.update(
                 this.canvas.width, 
                 this.canvas.height, 
-                this.mouse.x, 
-                this.mouse.y, 
-                this.mouse.radius
+                this.pointer.x, 
+                this.pointer.y, 
+                this.pointer.radius
             )
         }
     }

@@ -15,7 +15,7 @@ class App {
         this.ctx = this.canvas.getContext('2d')
 
         //  Setting mouse
-        this.mouse = {
+        this.pointer = {
             x: null,
             y: null,
             down: false,
@@ -33,6 +33,10 @@ class App {
         window.addEventListener('mousedown', this.onMouseDown.bind(this), false)
         window.addEventListener('mouseout', this.onMouseOut.bind(this), false)
         window.addEventListener('mouseup', this.onMouseUp.bind(this), false)
+        window.addEventListener('touchstart', this.onTouchStart.bind(this), false)
+        window.addEventListener('touchend', this.onTouchEnd.bind(this), false)
+        window.addEventListener('touchmove', this.onTouchMove.bind(this), false)
+
     }
 
     resize () {
@@ -44,32 +48,61 @@ class App {
     }
 
     onMouseDown (event) {
-        this.mouse.x = event.x
-        this.mouse.y = event.y
-        this.mouse.down = true
+        this.pointer.x = event.x
+        this.pointer.y = event.y
+        this.pointer.down = true
     }
 
     onMouseMove (event) {
-        if (this.mouse.down === true &&
-            distance2Point(this.mouse.x, this.mouse.y, event.x, event.y) > 2
+        if (this.pointer.down === true &&
+            distance2Point(this.pointer.x, this.pointer.y, event.x, event.y) > 2
         ) {
-            this.mouse.x = event.x
-            this.mouse.y = event.y
+            this.pointer.x = event.x
+            this.pointer.y = event.y
 
             this.addBubble(event.x, event.y)
         }
     }
 
     onMouseOut () {
-        this.mouse.x = null
-        this.mouse.y = null
-        this.mouse.down = false
+        this.pointer.x = null
+        this.pointer.y = null
+        this.pointer.down = false
     }
 
     onMouseUp () {
-        this.mouse.x = null
-        this.mouse.y = null
-        this.mouse.down = false
+        this.pointer.x = null
+        this.pointer.y = null
+        this.pointer.down = false
+    }
+
+    onTouchStart (event) {
+        const x = event.changedTouches[0].clientX
+        const y = event.changedTouches[0].clientY
+
+        this.pointer.x = x
+        this.pointer.y = y
+        this.pointer.down = true
+    }
+
+    onTouchMove (event) {
+        const x = event.changedTouches[0].clientX
+        const y = event.changedTouches[0].clientY
+
+        if (this.pointer.down === true &&
+            distance2Point(this.pointer.x, this.pointer.y, x, y) > 2
+        ) {
+            this.pointer.x = x
+            this.pointer.y = y
+
+            this.addBubble(x, y)
+        }
+    }
+
+    onTouchEnd (event) {
+        this.pointer.x = null
+        this.pointer.y = null
+        this.pointer.down = false
     }
 
     initialize () {
