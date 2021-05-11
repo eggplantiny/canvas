@@ -1,5 +1,5 @@
 export class Bubble {
-    constructor (x, y, size, color, shrink = 0.90, spread = 1.0) {
+    constructor (x, y, size, color, shrink = 0.98, spread = 2.0) {
         this.x = x
         this.y = y
         this.size = size
@@ -36,6 +36,6 @@ export class Bubble {
     }
 
     isDisappeared () {
-        return this.size <= 0.05
+        return this.size <= 1
     }
 }
