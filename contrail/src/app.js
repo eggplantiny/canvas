@@ -29,13 +29,13 @@ class App {
         //  setting resize event
         this.resize()
         window.addEventListener('resize', this.resize.bind(this), false)
-        window.addEventListener('mousemove', this.onMouseMove.bind(this), false)
-        window.addEventListener('mousedown', this.onMouseDown.bind(this), false)
-        window.addEventListener('mouseout', this.onMouseOut.bind(this), false)
-        window.addEventListener('mouseup', this.onMouseUp.bind(this), false)
-        window.addEventListener('touchstart', this.onTouchStart.bind(this), false)
-        window.addEventListener('touchend', this.onTouchEnd.bind(this), false)
-        window.addEventListener('touchmove', this.onTouchMove.bind(this), false)
+        window.addEventListener('mousemove', this.onPointMove.bind(this), false)
+        window.addEventListener('mousedown', this.onPointStart.bind(this), false)
+        window.addEventListener('mouseout', this.onPointEnd.bind(this), false)
+        window.addEventListener('mouseup', this.onPointEnd.bind(this), false)
+        window.addEventListener('touchstart', this.onPointStart.bind(this), false)
+        window.addEventListener('touchend', this.onPointEnd.bind(this), false)
+        window.addEventListener('touchmove', this.onPointMove.bind(this), false)
 
     }
 
@@ -47,47 +47,39 @@ class App {
         this.animate()
     }
 
-    onMouseDown (event) {
-        this.pointer.x = event.x
-        this.pointer.y = event.y
-        this.pointer.down = true
-    }
+    onPointStart (event) {
+        let x, y
+        const down = true
 
-    onMouseMove (event) {
-        if (this.pointer.down === true &&
-            distance2Point(this.pointer.x, this.pointer.y, event.x, event.y) > 2
-        ) {
-            this.pointer.x = event.x
-            this.pointer.y = event.y
-
-            this.addBubble(event.x, event.y)
+        if (event.changedTouches) {
+            x = event.changedTouches[0].clientX
+            y = event.changedTouches[0].clientY
+        } else {
+            x = event.x
+            y = event.y
         }
-    }
-
-    onMouseOut () {
-        this.pointer.x = null
-        this.pointer.y = null
-        this.pointer.down = false
-    }
-
-    onMouseUp () {
-        this.pointer.x = null
-        this.pointer.y = null
-        this.pointer.down = false
-    }
-
-    onTouchStart (event) {
-        const x = event.changedTouches[0].clientX
-        const y = event.changedTouches[0].clientY
 
         this.pointer.x = x
         this.pointer.y = y
-        this.pointer.down = true
+        this.pointer.down = down
     }
 
-    onTouchMove (event) {
-        const x = event.changedTouches[0].clientX
-        const y = event.changedTouches[0].clientY
+    onPointEnd (event) {
+        this.pointer.x = null
+        this.pointer.y = null
+        this.pointer.down = false
+    }
+
+    onPointMove (event) {
+        let x, y
+
+        if (event.changedTouches) {
+            x = event.changedTouches[0].clientX
+            y = event.changedTouches[0].clientY
+        } else {
+            x = event.x
+            y = event.y
+        }
 
         if (this.pointer.down === true &&
             distance2Point(this.pointer.x, this.pointer.y, x, y) > 2
@@ -97,12 +89,6 @@ class App {
 
             this.addBubble(x, y)
         }
-    }
-
-    onTouchEnd (event) {
-        this.pointer.x = null
-        this.pointer.y = null
-        this.pointer.down = false
     }
 
     initialize () {

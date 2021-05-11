@@ -36,6 +36,6 @@ export class Bubble {
     }
 
     isDisappeared () {
-        return this.size <= 1
+        return this.size <= 5
     }
 }
