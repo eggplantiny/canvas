@@ -16,8 +16,8 @@ export class Ball extends Entity {
         ctx.fill()
     }
 
-    update () {
-        super.update()
+    update (worldWidth, worldHeight, gravity) {
+        super.update(worldWidth, worldHeight, gravity)
     }
 
     onClick () {

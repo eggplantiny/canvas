@@ -14,7 +14,7 @@ export class World {
         this.ballList = []
 
         const radius = 50
-        const testBall = new Ball(this.width / 2, this.height / 2, 1, radius, '#ffffff')
+        const testBall = new Ball(this.width / 2, this.height / 2, 0.001, radius, '#ffffff')
         this.ballList.push(testBall)
     }
 
@@ -36,23 +36,33 @@ export class World {
         const { width, height, gravity } = this
 
         for (const rocket of this.rocketList) {
-            rocket.update(width, height, gravity, )
+            rocket.update(width, height, gravity)
         }
 
-        for (const particle of this.particleList) {
+        for (let c = 0; c < this.particleList.length; c++) {
+            const particle = this.particleList[c]
             particle.update(width, height, gravity)
+
+            if (particle.willBeDestroy()) {
+                this.particleList.splice(c, 1)
+            }
         }
 
-        for (const ball of this.ballList) {
+        for (let c = 0; c < this.ballList.length; c++) {
+            const ball = this.ballList[c]
             ball.update(width, height, gravity)
+
+            if (ball.willBeDestroy()) {
+                this.ballList.splice(c, 1)
+            }
         }
     }
 
     onClick (pointerCurrentX, pointerCurrentY) {
-        for (const ball of this.ballList) {
-            if (isPointInRadius(pointerCurrentX, pointerCurrentY, ball.x, ball.y, ball.size)) {
-                ball.onClick()
-            }
-        }
+        // for (const ball of this.ballList) {
+        //     if (isPointInRadius(pointerCurrentX, pointerCurrentY, ball.x, ball.y, ball.size)) {
+        //         ball.onClick()
+        //     }
+        // }
     }
 }
