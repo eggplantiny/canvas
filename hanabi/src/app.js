@@ -66,6 +66,8 @@ class App {
         this.pointer.currentX = x
         this.pointer.currentY = y
         this.pointer.down = down
+
+        this.world.onClick(x, y)
     }
 
     onPointEnd (event) {

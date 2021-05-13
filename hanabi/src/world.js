@@ -1,3 +1,5 @@
+import { Ball } from "./Entity/ball.js"
+import { isPointInRadius } from "./utils.js"
 
 export class World {
     constructor (width, height, gravity = 1) {
@@ -9,6 +11,11 @@ export class World {
     initialize () {
         this.rocketList = []
         this.particleList = []
+        this.ballList = []
+
+        const radius = 50
+        const testBall = new Ball(this.width / 2, this.height / 2, 1, radius, '#ffffff')
+        this.ballList.push(testBall)
     }
 
     draw (ctx) {
@@ -18,6 +25,10 @@ export class World {
 
         for (const particle of this.particleList) {
             particle.draw(ctx)
+        }
+
+        for (const ball of this.ballList) {
+            ball.draw(ctx)
         }
     }
 
@@ -30,6 +41,18 @@ export class World {
 
         for (const particle of this.particleList) {
             particle.update(width, height, gravity)
+        }
+
+        for (const ball of this.ballList) {
+            ball.update(width, height, gravity)
+        }
+    }
+
+    onClick (pointerCurrentX, pointerCurrentY) {
+        for (const ball of this.ballList) {
+            if (isPointInRadius(pointerCurrentX, pointerCurrentY, ball.x, ball.y, ball.size)) {
+                ball.onClick()
+            }
         }
     }
 }
