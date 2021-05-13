@@ -2,6 +2,10 @@ import {
     distance2Point
 } from './utils.js'
 
+import {
+    World
+} from './world.js'
+
 class App {
     constructor () {
         //  initialize canvas
@@ -11,10 +15,12 @@ class App {
 
         this.ctx = this.canvas.getContext('2d')
 
-        //  Setting mouse
+        //  Setting Pointer
         this.pointer = {
-            x: null,
-            y: null,
+            startX: null,
+            startY: null,
+            currentX: null,
+            currentY: null,
             down: false,
             radius: 128
         }
@@ -33,10 +39,13 @@ class App {
     }
 
     resize () {
-        this.canvas.width = window.innerWidth
-        this.canvas.height = window.innerHeight
+        const width = window.innerWidth
+        const height = window.innerHeight
 
-        this.initialize()
+        this.canvas.width = width
+        this.canvas.height = height
+
+        this.initialize(width, height)
         this.animate()
     }
 
@@ -52,14 +61,16 @@ class App {
             y = event.y
         }
 
-        this.pointer.x = x
-        this.pointer.y = y
+        this.pointer.startX = x
+        this.pointer.startY = y
+        this.pointer.currentX = x
+        this.pointer.currentY = y
         this.pointer.down = down
     }
 
     onPointEnd (event) {
-        this.pointer.x = null
-        this.pointer.y = null
+        this.pointer.startX = null
+        this.pointer.startY = null
         this.pointer.down = false
     }
 
@@ -74,16 +85,23 @@ class App {
             y = event.y
         }
 
-        //  add method
+        //  addMethod
+        this.pointer.currentX = x
+        this.pointer.currentY = y
     }
 
-    initialize () {
+    initialize (width, height) {
+        this.world = new World(width, height, 1)
+        this.world.initialize()
     }
 
     update () {
+        const { pointer } = this
+        this.world.update(pointer.startX, pointer.startY, pointer.currentX, pointer.currentY)
     }
 
     draw () {
+        this.world.draw(this.ctx)
     }
 
     animate () {
