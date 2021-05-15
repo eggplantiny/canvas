@@ -14,7 +14,7 @@ export class World {
         this.ballList = []
 
         const radius = 50
-        const testBall = new Ball(this.width / 2, this.height / 2, 0.001, radius, '#ffffff')
+        const testBall = new Ball(this.width / 2, this.height / 2, 0.1, radius, '#ffffff')
         this.ballList.push(testBall)
     }
 
@@ -59,10 +59,10 @@ export class World {
     }
 
     onClick (pointerCurrentX, pointerCurrentY) {
-        // for (const ball of this.ballList) {
-        //     if (isPointInRadius(pointerCurrentX, pointerCurrentY, ball.x, ball.y, ball.size)) {
-        //         ball.onClick()
-        //     }
-        // }
+        for (const ball of this.ballList) {
+            if (isPointInRadius(pointerCurrentX, pointerCurrentY, ball.x, ball.y, ball.size)) {
+                ball.onClick()
+            }
+        }
     }
 }

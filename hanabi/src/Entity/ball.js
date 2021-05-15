@@ -1,8 +1,10 @@
+import { CornerBehavior } from "../constant.js"
 import { Entity } from "./entity.js"
 
 export class Ball extends Entity {
     constructor (x, y, mass, size, color) {
-        super(x, y, mass, size)
+        const elastic = 0.9
+        super(x, y, mass, size, elastic, 0, 0, { cornerBehavior: CornerBehavior.BOUNCE })
         this.color = color
     }
 

@@ -8,4 +8,5 @@ export class Rocket extends Entity {
     draw (ctx) {
         super.draw(ctx)
     }
+    
 }
